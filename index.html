@@ -1,0 +1,78 @@
+<canvas id="canvas" style="background:black" width="620" height="340"></canvas>
+
+<head>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            // Obtener objetos gráficos
+            var canvas = document.getElementById("canvas");
+            // Obtener el contexto de los gráficos
+            var context = canvas.getContext("2d");
+            // Obtener el ancho y el alto de la pantalla del navegador
+            var W = window.innerWidth;
+            var H = window.innerHeight;
+            // Establece el ancho y alto del lienzo
+            canvas.width = W;
+            canvas.height = H;
+            // El tamaño de fuente de cada texto
+            var fontSize = 15;
+            // Columna calculada
+            var colunms = Math.floor(W / fontSize);
+            // Registra las coordenadas del eje y de cada columna de texto
+            var drops = [];
+            // Inicializar un punto de partida para cada texto
+            for (var i = 0; i < colunms; i++) {
+                drops.push(0);
+            }
+
+            // Texto en movimiento
+            var str = "01abcdefghijklmnopqurstuvwxyz";
+
+            //4:fillText(str,x,y);El principio es cambiar la posición de las coordenadas de y
+            // Función de dibujo
+            function draw() {
+                // Deja que el fondo cambie gradualmente de transparente a opaco
+                context.fillStyle = "rgba(0,0,0,0.05)";
+                context.fillRect(0, 0, W, H);
+                // Establecer el estilo de la fuente
+                //context.font = "700 "+fontSize+"px Microsoft Yahei";
+                context.font = fontSize + 'px arial';
+                // Agrega color a la fuente
+                context.fillStyle = "green"; // Cambia el color de la fuente a voluntad
+                // Escribe en el gráfico
+                for (var i = 0; i < colunms; i++) {
+                    var index = Math.floor(Math.random() * str.length);
+                    var x = i * fontSize;
+                    var y = drops[i] * fontSize;
+                    context.fillText(str[index], x, y);
+                    // Si desea cambiar la hora, debe cambiar el punto de partida cada vez
+                    if (y >= canvas.height && Math.random() > 0.92) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            };
+
+
+            function randColor() {
+                var r = Math.floor(Math.random() * 256);
+                var g = Math.floor(Math.random() * 256);
+                var b = Math.floor(Math.random() * 256);
+                return "rgb(" + r + "," + g + "," + b + ")";
+            }
+
+            draw();
+            setInterval(draw, 33);
+        };
+    </script>
+
+    <body>
+        <h1>asd</h1>
+    </body>
+</head>
